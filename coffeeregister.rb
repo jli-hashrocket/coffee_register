@@ -87,18 +87,24 @@ class Cashier
   end
 
   def get_report
-    puts "Enter the date(MM/DD/YYYY) of the report."
-    report_date = gets.chomp
-    read_file = CSV.read(@report_file)
-    date_format = Date.strptime(report_date, '%m/%d/%Y')
-    if date_format.to_time < Time.now
-      read_file.each do |item|
-        if item[0].include?(report_date)
-          puts "Date:#{item[0]} | SKU:#{item[1]} | Name:#{item[2]} | Qty:#{item[5]} | Gross Sales:#{item[3]} | Net Profit:#{(item[4].to_f-item[3].to_f).round(2).abs}}"
+    keep_going = true
+    while keep_going
+      puts "Enter the date(MM/DD/YYYY) of the report."
+      report_date = gets.chomp
+      read_file = CSV.read(@report_file)
+      date_format = Date.strptime(report_date, '%m/%d/%Y')
+      if date_format.to_time < Time.now
+        read_file.each do |item|
+          if item[0].include?(report_date)
+            puts "Date:#{item[0]} | SKU:#{item[1]} | Name:#{item[2]} | Qty:#{item[5]} | Gross Sales:#{item[3]} | Net Profit:#{(item[4].to_f-item[3].to_f).round(2).abs}}"
+            keep_going = false
+          else
+            break puts "No date found"
+          end
         end
+      else
+        puts "Date is in the future!"
       end
-    else
-      puts "Date is in the future!"
     end
   end
 
