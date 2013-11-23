@@ -1,0 +1,5 @@
+name,sku,retail_price,purchase_price
+Light,1,3,1
+Medium,2,5,2
+Dark,3,7,3
+Mocha,4,8.50,3.50
